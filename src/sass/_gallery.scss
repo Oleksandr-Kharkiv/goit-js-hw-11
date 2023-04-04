@@ -1,12 +1,21 @@
 .gallery {
-    background-color: darkolivegreen;
-    outline: 2px solid tomato;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
 }
 
 .photo-card {
     outline: 2px solid rgb(184, 255, 71);
 }
+.photo-card img {
+    width: 300px;
+}
+
 .info {
+    display: flex;
+    justify-content: space-around ;
     outline: 2px solid rgb(117, 108, 106);
 }
 .info-item {

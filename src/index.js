@@ -1,71 +1,61 @@
 import Notiflix from 'notiflix';
-
-const BASE_URL = 'https://pixabay.com/api/'; 
-const API_KEY = '?key=34921015-82cb8e104c87b6309f3f6f395';
-const FILTER = `&image_type=photo&orientation=horizontal&safesearch=true`;
+import NewsApiService from './js/fetchImage';
+import renderImageCard from './js/renderImageCard';
 
 const searchFormEl = document.querySelector('#search-form');
-searchFormEl.addEventListener('submit', onFormSubmit);
-
 const galleryEl = document.querySelector('.gallery');
+const loadMoreBtnEl = document.querySelector('.load-more');
+const submitBtnEl = document.querySelector('button[type="submit"]');
+loadMoreBtnEl.classList.add('[is-hidden]');
 
-let enteredToSearch = '';
+// console.log(submitBtnEl);
+// submitBtnEl.disabled = true;
+
+const newsApiService = new NewsApiService();
+
+searchFormEl.addEventListener('submit', onFormSubmit);
+loadMoreBtnEl.addEventListener('click', onLoadMore);
 
 function onFormSubmit(event) {
-    event.preventDefault();
-    const {
-        elements: { searchQuery },
-    } = event.target;
-    
-    enteredToSearch = searchQuery.value;
-    Notiflix.Notify.info(enteredToSearch);
-    return enteredToSearch
+  event.preventDefault();
+  newsApiService.query = event.currentTarget.elements.searchQuery.value.trim();
+  if (newsApiService.query === '') {
+    loadMoreBtnEl.classList.add('is-hidden');
+    galleryEl.innerHTML = '';
+    Notiflix.Notify.warning('Enter your search data', {
+      position: 'center-center',
+      clickToClose: true,
+    });
+    return;
+  }
+  newsApiService.resetPage();
+  newsApiService.fetchImages().then(data => {
+    if (data.hits.length === 0) {
+      galleryEl.innerHTML = '';
+      Notiflix.Notify.failure(
+        `Sorry, there are no images matching your search query. Please try again. 🤦‍♂️🤔🤪`,
+        { position: 'center-center', clickToClose: true }
+      );
+      return;
+    }
+    clearGalleryContainer();
+    appendImageCard(data.hits);
+    loadMoreBtnEl.classList.remove('is-hidden');
+    console.log(data);
+  });
 }
-// function fetchImage(enteredToSearch) {
-//     return fetch(`${BASE_URL}${API_KEY}&q=${enteredToSearch}${FILTER}`).then(response => {
-//       if (!response.ok) {
-//         throw new Error(response.status);
-//       }
-//       return response.json();
-//     });
-// }
-// fetchImage(enteredToSearch)
-// .then(response => {
-//   console.log('Знайдено співпадінь:', response.length);
-//     renderImageCard(response);
-// })
-// .catch(error => {
-//   if (error.message === '404') {
-//     Notiflix.Notify.failure('Oops, there is no images', {position: 'center-center'});
-//     console.warn(`За вашим запитом картинки не знайдено`);
-//   } else {
-//     console.log(`Виникла помилка при спробі запиту`);
-//   }
-// });
 
-// function renderImageCard(images) {
-//     const markupCard = images
-//       .map(({ largeImageURL, tags, likes, views, comments, downloads}) => {
-//         return `
-//         <div class="photo-card">
-//         <img src="${largeImageURL}" alt="${tags}" loading="lazy" />
-//         <div class="info">
-//           <p class="info-item">
-//             <b>${likes}</b>
-//           </p>
-//           <p class="info-item">
-//             <b>${views}</b>
-//           </p>
-//           <p class="info-item">
-//             <b>${comments}</b>
-//           </p>
-//           <p class="info-item">
-//             <b>${downloads}</b>
-//           </p>
-//         </div>
-//       </div>
-//           `;
-//       })
-//       .join('');
-//       galleryEl.innerHTML = markupCard;
-//   }
+function onLoadMore() {
+  newsApiService.fetchImages().then(data => {
+    console.log(data);
+    appendImageCard(data.hits);
+  });
+}
+
+function appendImageCard(images) {
+  galleryEl.insertAdjacentHTML('beforeend', renderImageCard(images));
+}
+
+function clearGalleryContainer() {
+  galleryEl.innerHTML = '';
+}
