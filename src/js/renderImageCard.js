@@ -11,23 +11,29 @@ export default function renderImageCard(images) {
         }) => {
           console.log(images);
           return `
+          <a  href="${largeImageURL}" class="gallery-photo">
           <div class="photo-card">
           <img src="${webformatURL}" alt="${tags}" loading="lazy" />
           <div class="info">
             <p class="info-item">
-              <b>${likes}</b>
+              <b>Likes</b><br>
+              ${likes}
             </p>
             <p class="info-item">
-              <b>${views}</b>
+              <b>Views</b><br>
+              ${views}
             </p>
             <p class="info-item">
-              <b>${comments}</b>
+              <b>Comments</b><br>
+              ${comments}
             </p>
             <p class="info-item">
-              <b>${downloads}</b>
+              <b>Downloads</b><br>
+              ${downloads}
             </p>
           </div>
         </div>
+          </a>
             `;
         }
       )

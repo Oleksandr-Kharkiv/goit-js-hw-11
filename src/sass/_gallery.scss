@@ -1,23 +1,31 @@
 .gallery {
-    display: flex;
-    gap: 10px;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
+  padding: 25px 40px 10px 40px;
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
-
+.gallery-photo {
+  text-decoration: none;
+  font-size: 12px;
+  color: inherit;
+}
 .photo-card {
-    outline: 2px solid rgb(184, 255, 71);
+  background-color: beige;
+  text-align: center;
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 0px 0px 4px 4px;
 }
 .photo-card img {
-    width: 300px;
+  display: block;
+  width: 300px;
+  height: auto;
+  object-fit: cover;
 }
 
 .info {
-    display: flex;
-    justify-content: space-around ;
-    outline: 2px solid rgb(117, 108, 106);
-}
-.info-item {
-    outline: 2px solid rgb(46, 204, 231);
+  display: flex;
+  justify-content: space-around;
 }
