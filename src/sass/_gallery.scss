@@ -18,14 +18,17 @@
     0px 2px 1px rgba(0, 0, 0, 0.2);
   border-radius: 4px;
 }
+.photo-tumb {
+  height: 200px;
+  width: 300px;
+}
 .photo-card img {
   display: block;
-  width: 300px;
-  height: auto;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   border-radius: 4px 4px 0px 0px;
 }
-
 .info {
   display: flex;
   justify-content: space-around;

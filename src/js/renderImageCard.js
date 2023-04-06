@@ -1,19 +1,21 @@
 export default function renderImageCard(images) {
-    return images.map(
-        ({
-          webformatURL,
-          largeImageURL,
-          tags,
-          likes,
-          views,
-          comments,
-          downloads,
-        }) => {
-          console.log(images);
-          return `
+  return images
+    .map(
+      ({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      }) => {
+        return `
           <a  href="${largeImageURL}" class="gallery-photo">
           <div class="photo-card">
+          <div class="photo-tumb">
           <img src="${webformatURL}" alt="${tags}" loading="lazy" />
+          </div>
           <div class="info">
             <p class="info-item">
               <b>Likes</b><br>
@@ -35,7 +37,7 @@ export default function renderImageCard(images) {
         </div>
           </a>
             `;
-        }
-      )
-      .join('');
-  }
+      }
+    )
+    .join('');
+}
