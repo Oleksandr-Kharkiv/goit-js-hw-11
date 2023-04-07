@@ -77,8 +77,8 @@ function onFailedSearch() {
 
 function onSuccessSearch(data) {
   appendImageCard(data.hits);
+  submitBtnEl.disabled = true;
   if (data.hits.length >= newsApiService.per_page) {
-    submitBtnEl.disabled = true;
     loadMoreBtnEl.classList.remove('is-hidden');
   } else if (data.hits.length < newsApiService.per_page) {
     loadMoreBtnEl.classList.add('is-hidden');
@@ -205,8 +205,8 @@ function onSubmitBtn() {
 
 // function onSuccessSearch(data) {
 //   appendImageCard(data.hits);
+//   submitBtnEl.disabled = true;
 //   if (data.hits.length >= newsApiService.per_page) {
-//     submitBtnEl.disabled = true;
 //     loadMoreBtnEl.classList.remove('is-hidden');
 //   } else if (data.hits.length < newsApiService.per_page) {
 //     loadMoreBtnEl.classList.add('is-hidden');
